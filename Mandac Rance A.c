@@ -1,3 +1,10 @@
+#include <stdio.h>
+#include <conio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <time.h>
+
+
 /*********************************************************************************************************
 This is to certify that this project is my own work, based on my personal efforts in studying and applying the concepts
 learned. I have constructed the functions and their respective algorithms and corresponding code by myself. The
@@ -5,12 +12,6 @@ program was run, tested, and debugged by my own efforts. I further certify that 
 otherwise plagiarized the work of other students and/or persons.
 Rance Aris Mandac, DLSU ID# 12208019
 *********************************************************************************************************/
-
-#include <stdio.h>
-#include <conio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <time.h>
 
 struct dataGame
 {
@@ -82,6 +83,7 @@ void AddRecords(struct dataGame dataRecords[], int *nData)
     int questionNum;
     char questionSearch[30];
     char answerSearch[30];
+    int i;
 
   										  // Get user input for new record
     printf("\n	ADD RECORD TO DATA\n");
@@ -91,7 +93,7 @@ void AddRecords(struct dataGame dataRecords[], int *nData)
     scanf(" %[^\n]", answerSearch); 	 // read a whole line of input including spaces
 
    										 // Check if question and answer already exist in records
-    for (int i = 0; i < *nData; i++)
+    for (i = 0; i < *nData; i++)
     {
         if (strcmp(questionSearch, dataRecords[i].Question) == 0 && strcmp(answerSearch, dataRecords[i].Answer) == 0)
         {
@@ -121,7 +123,7 @@ void AddRecords(struct dataGame dataRecords[], int *nData)
     
     								  // Get question number based on topic and assign to new record
     questionNum = 1;
-    for (int i = 0; i < *nData; i++)
+    for (i = 0; i < *nData; i++)
     {
         if (strcmp(topicArray, dataRecords[i].Topic) == 0 && dataRecords[i].QuestionNum >= questionNum)
         {
@@ -159,12 +161,13 @@ int displayMenu()
 
 void DisplayRecords(struct dataGame dataRecords[], int nData)
 {
+	int i;
     printf("\n	RECORDS IN DATA:\n"); 							// PRINT EACH RECORD
     if(nData == 0)
     {
     	printf("\n	There are no records found please Add or Import Data!\n\n");
 	}
-    for (int i = 0; i < nData; i++)
+    for (i = 0; i < nData; i++)
     {
     	printf("\n	RECORD #%d\n",i+1); 						// PRINT EACH RECORD
         printf("	Topic: %s\n", dataRecords[i].Topic);
@@ -192,13 +195,15 @@ void displayUniqueTopics(struct dataGame *dataRecords, int *nData)
 {
     char uniqueTopics[100][20]; 		// Assuming there are no more than 100 unique topics, each with 20 characters or less
     int nUniqueTopics = 0;
+    int i;
+    int j;
     
     									// Find all unique topics in the dataRecords array
-    for (int i = 0; i < *nData; i++)
+    for (i = 0; i < *nData; i++)
     {
         								// Check if the current record's topic is already in the uniqueTopics array
         int newTopic = 1;
-        for (int j = 0; j < nUniqueTopics; j++)
+        for (j = 0; j < nUniqueTopics; j++)
         {
             if (strcmp(dataRecords[i].Topic, uniqueTopics[j]) == 0)
             {
@@ -215,7 +220,7 @@ void displayUniqueTopics(struct dataGame *dataRecords, int *nData)
     }
     
     printf("	Available topics:\n"); // Display all unique topics
-    for (int i = 0; i < nUniqueTopics; i++)
+    for (i = 0; i < nUniqueTopics; i++)
     {
         printf("	%d. %s\n", i + 1, uniqueTopics[i]);
     }
@@ -234,17 +239,19 @@ void displayUniqueTopics(struct dataGame *dataRecords, int *nData)
 	isNewTopic: integer indicating whether the current record's topic is new or not
 	j: integer used for indexing uniqueTopics array
 */
-void displayUniqueTopics(struct quizData quizRecords[], int *nQuizData) 
+void displayUniqueTopicsQuiz(struct quizData quizRecords[], int *nQuizData) 
 {
     char uniqueTopics[100][20]; // Assuming there are no more than 100 unique topics, each with 20 characters or less
     int nUniqueTopics = 0;
+    int i;
+    int j;
     
     // Find all unique topics in the quizRecords array
-    for (int i = 0; i < *nQuizData; i++)
+    for (i = 0; i < *nQuizData; i++)
     {
         // Check if the current record's topic is already in the uniqueTopics array
         int isNewTopic = 1;
-        for (int j = 0; j < nUniqueTopics; j++)
+        for (j = 0; j < nUniqueTopics; j++)
         {
             if (strcmp(quizRecords[i].Topic, uniqueTopics[j]) == 0)
             {
@@ -261,7 +268,7 @@ void displayUniqueTopics(struct quizData quizRecords[], int *nQuizData)
     }
     
     printf("Available topics:\n"); // Display all unique topics
-    for (int i = 0; i < nUniqueTopics; i++)
+    for (i = 0; i < nUniqueTopics; i++)
     {
         printf("%d. %s\n", i + 1, uniqueTopics[i]);
     }
@@ -294,6 +301,7 @@ void displayEdit(struct dataGame dataRecords[], int questionNum)
 */
 void editRecords(struct dataGame dataRecords[], int *nData)
 {
+	int i;
     // Display all unique topics
     displayUniqueTopics(dataRecords, nData);
 
@@ -306,7 +314,7 @@ void editRecords(struct dataGame dataRecords[], int *nData)
     printf("\n	Questions on topic '%s':\n", dataRecords[topicChoice - 1].Topic);
     int count = 0;
     int questionNums[*nData];
-    for (int i = 0; i < *nData; i++)
+    for (i = 0; i < *nData; i++)
     {
         if (strcmp(dataRecords[i].Topic, dataRecords[topicChoice - 1].Topic) == 0)
         {
@@ -387,6 +395,7 @@ void editRecords(struct dataGame dataRecords[], int *nData)
 */
 void deleteRecords(struct dataGame dataRecords[], int *nData)
 {
+	int i;
     // Display all unique topics
     displayUniqueTopics(dataRecords, nData);
     
@@ -399,7 +408,7 @@ void deleteRecords(struct dataGame dataRecords[], int *nData)
     printf("\n	Questions on topic '%s':\n", dataRecords[topicChoice - 1].Topic);
     int numQuestionsToDelete = 0;
     int questionIndicesToDelete[100];
-    for (int i = 0; i < *nData; i++)
+    for (i = 0; i < *nData; i++)
     {
         if (strcmp(dataRecords[i].Topic, dataRecords[topicChoice - 1].Topic) == 0)
         {
@@ -423,7 +432,7 @@ void deleteRecords(struct dataGame dataRecords[], int *nData)
     if (strcmp(confirmChoice, "Y") == 0 || strcmp(confirmChoice, "y") == 0)
     {
         int questionNumToDelete = dataRecords[questionIndicesToDelete[questionChoice - 1]].QuestionNum;
-        for (int i = questionIndicesToDelete[questionChoice - 1]; i < *nData - 1; i++)
+        for (i = questionIndicesToDelete[questionChoice - 1]; i < *nData - 1; i++)
         {
             dataRecords[i] = dataRecords[i + 1];
             if (dataRecords[i].QuestionNum > questionNumToDelete)
@@ -445,15 +454,14 @@ void deleteRecords(struct dataGame dataRecords[], int *nData)
 int importData(struct dataGame dataRecords[], int *nData)
 {
     char filename[31];
-    printf("\n\n	Enter the filename of the text file to load: ");
+    printf("Enter the filename of the text file to load: ");
     scanf("%s", filename);
     strcat(filename, ".txt");
 
     FILE *fp = fopen(filename, "r");
     if (fp == NULL) 
 	{
-        printf("\n	Error! cannot open file\n");
-        printf("\n	File not found!\n");
+        printf("Error: cannot open file\n");
         return 1;
     }
 
@@ -503,7 +511,6 @@ int importData(struct dataGame dataRecords[], int *nData)
 
     return 0;
 }
-
 /*
 	Export data to a text file with the contents of the dataRecords array
 	@param dataRecords - an array of struct dataGame containing all the records
@@ -512,6 +519,7 @@ int importData(struct dataGame dataRecords[], int *nData)
 */
 int exportData(struct dataGame dataRecords[], int *nData, char *filename) 
 { 
+	int i;
 	if (*nData == 0) {
         printf("	Cannot export data: no records found.\n");
         return 1;
@@ -522,7 +530,7 @@ int exportData(struct dataGame dataRecords[], int *nData, char *filename)
         return 1;
     }
 
-    for (int i = 0; i < *nData; i++) 
+    for (i = 0; i < *nData; i++) 
 	{
         // write topic if present
         if (strlen(dataRecords[i].Topic) > 0) {
@@ -554,6 +562,7 @@ int exportData(struct dataGame dataRecords[], int *nData, char *filename)
 */
 int importQuizData(struct dataGame dataRecords[], struct quizData quizRecords[], int *nData, char *filename) 
 {
+	int i;
     FILE *fp = fopen(filename, "r");
     if (fp == NULL) {
         return 1;
@@ -602,7 +611,7 @@ int importQuizData(struct dataGame dataRecords[], struct quizData quizRecords[],
 
     fclose(fp);
 
-    for (int i = 0; i < 100; i++) 
+    for (i = 0; i < 100; i++) 
 	{
         strcpy(quizRecords[i].Topic, dataRecords[i].Topic);
         quizRecords[i].QuestionNum = dataRecords[i].QuestionNum;
@@ -618,8 +627,9 @@ int importQuizData(struct dataGame dataRecords[], struct quizData quizRecords[],
 
 void displayQuiz(struct quizData quizRecords[], int nData)
 {
+	int i;
     printf("\n\t---RECORDS---\n"); 	// PRINT EACH RECORD
-    for (int i = 0; i < nData; i++)
+    for (i = 0; i < nData; i++)
     {
     	printf("\n\t---RECORD #%d---\n",i+1); 	// PRINT EACH RECORD
         printf("	Topic: %s\n", quizRecords[i].Topic);
@@ -634,11 +644,12 @@ void displayQuiz(struct quizData quizRecords[], int nData)
 
 void playQuiz(struct quizData quizRecords[], struct dataPlayer playerRecords[], int *nQuizData, int *nPlayer) 
 {
+	int i;
 	system("cls");
     char answer[30];
     int answeredQuestions[100] = {0}; // initialize all to 0
     int numAnswered = 0; // keep track of how many questions have been answered
-
+ 	printf("\n\n");
     printf("	Please enter your name: ");
     scanf("%s", playerRecords[*nPlayer].playerName);
     playerRecords[*nPlayer].playerScore = 0;
@@ -650,7 +661,7 @@ void playQuiz(struct quizData quizRecords[], struct dataPlayer playerRecords[], 
     	system("cls");
         // Display available topics
         printf("\n\n");
-        displayUniqueTopics(quizRecords, nQuizData);
+        displayUniqueTopicsQuiz(quizRecords, nQuizData);
         printf("\n\n");
         int topicChoice = 0;
         printf("	Please choose a topic (enter the number): ");
@@ -663,7 +674,7 @@ void playQuiz(struct quizData quizRecords[], struct dataPlayer playerRecords[], 
         }
         
         int topicQuestionsRemaining = 0;
-        for (int i = 0; i < *nQuizData; i++) 
+        for (i = 0; i < *nQuizData; i++) 
         {
             if (strcmp(quizRecords[i].Topic, quizRecords[topicChoice - 1].Topic) == 0 && !answeredQuestions[i]) 
             {
@@ -737,6 +748,9 @@ and displays the sorted scores on the screen.
 */
 int viewScores(struct dataPlayer playerRecords[], int *nPlayer) 
 {
+	int i;
+	int j;
+	
 	system("cls");
 	printf("\n\n");
    		 // Open the file in read mode
@@ -778,8 +792,9 @@ int viewScores(struct dataPlayer playerRecords[], int *nPlayer)
     *nPlayer = record_count;
 
     	// Sort the scores in descending order using bubble sort
-    for (int i = 0; i < record_count-1; i++) {
-        for (int j = 0; j < record_count-i-1; j++)
+    for (i = 0; i < record_count-1; i++) 
+	{
+        for (j = 0; j < record_count-i-1; j++)
 		 {
             if (playerRecords[j].playerScore < playerRecords[j+1].playerScore) 
 			{
@@ -794,7 +809,7 @@ int viewScores(struct dataPlayer playerRecords[], int *nPlayer)
     if (record_count > 0) 
 	{
         printf("	Player Name	Score\n");
-        for (int i = 0; i < record_count; i++) 
+        for (i = 0; i < record_count; i++) 
 		{
             printf("	 %s		 %d\n", playerRecords[i].playerName, playerRecords[i].playerScore);
         }
@@ -815,6 +830,7 @@ int viewScores(struct dataPlayer playerRecords[], int *nPlayer)
 */
 int exportScores(struct dataPlayer playerRecords[], int *nPlayer) 
 {
+	int i;
     // Open the file in write mode
     FILE *fp = fopen("scores.txt", "w");
     if (fp == NULL) 
@@ -824,7 +840,7 @@ int exportScores(struct dataPlayer playerRecords[], int *nPlayer)
     }
 
     // Write the player names and scores to the file
-    for (int i = 0; i < *nPlayer; i++) 
+    for (i = 0; i < *nPlayer; i++) 
 	{
         fprintf(fp, "%s\n	%d\n\n", playerRecords[i].playerName, playerRecords[i].playerScore);
     }
@@ -906,8 +922,9 @@ int adminPassword()
 
 void printScore(struct dataPlayer playerRecords[], int nPlayer) 
 {
+	int i;
     printf("Player scores:\n");
-    for (int i = 0; i < nPlayer; i++) 
+    for (i = 0; i < nPlayer; i++) 
 	{
         printf("%s: %d\n", playerRecords[i].playerName, playerRecords[i].playerScore);
     }
@@ -1103,4 +1120,3 @@ int main()
 
     return 0;
 }
-
